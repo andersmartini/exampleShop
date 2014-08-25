@@ -16,7 +16,7 @@ router.get("/buy", function (req, res){
 			console.log("successfully!")
 			console.log(body + response)
 			var parsed = JSON.parse(body)
-			var address = "/Terminal?TransactionId=" + parsed.TransactionId
+			var address = "/Terminal?InstallationId=1&TransactionId=" + parsed.TransactionId
 			console.log("address is: " + address)
 			res.redirect("https://www.bohlmark.se/V0" + address)
 		}
