@@ -9,14 +9,17 @@ router.get('/', function(req, res) {
 
 
 router.get("/buy", function (req, res){
-	request.get("http://www.bohlmark.se/V0/Register?Amount=100&Recipientid=2&CurrencyCode=SEK&installationId=1&buyerid=someone&orderNumber=25&returnUrl=https://www.bohlmark.se", function(err, response, body){
+
+	var orderNumber = Math.floor(Math.random()*30)+10;
+	var customer = "someguy" + Math.floor(Math.random()*300)+10
+	request.get("http://www.bohlmark.se/V0/Register?Amount=10000&returnUrl=localhost://3000&Recipientid=2&CurrencyCode=SEK&InstallationId=1&buyerid="+customer+"&orderNumber="+orderNumber , function(err, response, body){
 		console.log("request sent!!")
 		
 		if(!err){
 			console.log("successfully!")
 			console.log(body + response)
 			var parsed = JSON.parse(body)
-			var address = "/Terminal?InstallationId=1&TransactionId=" + parsed.TransactionId
+			var address = "/Terminal?InstallationId=1&r&amount=10000&CurrencyCode=SEK&TransactionId=" + parsed.TransactionId
 			console.log("address is: " + address)
 			res.redirect("https://www.bohlmark.se/V0" + address)
 		}
