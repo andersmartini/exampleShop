@@ -11,7 +11,20 @@ router.get('/', function(req, res) {
 
 
 router.post("/charge", function (req, res){
-	sign(req, res)
+	sign(req, '/V1/Charges', function(result){
+		var object = JSON.parse(result)
+		console.log("result: " + typeof(object))
+		console.log("result.ChargeId: "+ object.ChargeId)
+		if(!result.Captured){
+			var terminal = "/V1/Charges/?id="+object["ChargeId"]+"/Terminal"
+			req.body = object;
+			req.id = object.ChargeId;
+			sign(req, terminal, function(result){
+				res.send(result)
+			})
+			
+		}
+	})
 })
 
 router.get("/charges", function (req, res){

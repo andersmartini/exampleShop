@@ -1,7 +1,7 @@
 var crypto = require("crypto");
 var http = require("http");
 
-function sign(req, res){
+function sign(req, path, next){
 
     var body = req.body;
     body.ReturnUrl = 'https://www.google.se';
@@ -18,7 +18,7 @@ function sign(req, res){
 
     var requestParams = {
         hostname: host,
-        path: '/V1/Charges',
+        path: path,
         port: 80,
         method: "POST",
         headers: {
@@ -41,8 +41,7 @@ function sign(req, res){
             b += d;
         })
         response.on("end", function () {
-            console.log("body", b);
-            res.send(b)
+            next(b)
         })
     });
 
