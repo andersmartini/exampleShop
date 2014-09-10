@@ -17,7 +17,6 @@ router.post("/charge", function (req, res){
 		console.log("result.ChargeId: "+ object.ChargeId)
 		if(!result.Captured){
 			var terminal = "/V1/Charges/?id="+object["ChargeId"]+"/Terminal"
-			req.body = object;
 			req.id = object.ChargeId;
 			sign(req, terminal, function(result){
 				res.send(result)
