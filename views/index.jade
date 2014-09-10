@@ -1,6 +1,21 @@
 extends layout
 
 block content
-  h1 This worlds best product
-  p only 100 rupies
-  a(href="/buy") Buy Now!
+	h1 This worlds best product
+	form(method="post", action="/charge")
+		select(name="Merchant")
+			option(value=1) 1
+			option(value=2) 2
+			option(value=3) 3
+		input(name="Amount", placeholder="Amount")
+		select(name="CurrencyCode")
+			option(value="SEK", selected) SEK
+			option(value="EUR") EUR
+		input(name="Customer" placeholder="Customers Name")
+		p Capture:
+			input(type="checkbox", name="Capture", checked)
+
+		input(type="submit")
+
+
+
