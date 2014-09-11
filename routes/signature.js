@@ -4,7 +4,7 @@ var http = require("http");
 function sign(req, path, next){
 
     var body = req.body;
-    body.ReturnUrl = 'https://www.google.se';
+    body.ReturnUrl = 'http://localhost:3000/';
     body.OrderNumber = 'order-"'+ Math.floor(Math.random()*10)+'"';
     body = JSON.stringify(body);
     var hash = crypto.createHash('sha256');

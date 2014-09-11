@@ -12,10 +12,12 @@ block content
 			option(value="SEK", selected) SEK
 			option(value="EUR") EUR
 		input(name="Customer" placeholder="Customers Name")
-		p Capture:
-			input(type="checkbox", name="Capture", checked)
+		label(for="Capture") Capture
+		input(type="checkbox", name="Capture", checked)
 
 		input(type="submit")
 
 
-
+	-for (var i=0; i<uncaptured.length; i++)
+		p= uncaptured[i]
+		a(href="/capture/"+uncaptured[i]) Capture payment
