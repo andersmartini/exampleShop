@@ -13,13 +13,13 @@ function sign(req, path, next){
 
 
 
-    var host = "www.bohlmark.se";
+    var host = "localhost";
     //host = "localhost"
 
     var requestParams = {
         hostname: host,
         path: path,
-        port: 80,
+        port: 49192,
         method: "POST",
         headers: {
             'Content-Type': 'application/json',

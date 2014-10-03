@@ -22,20 +22,21 @@ router.get('/', function(req, res) {
 	res.render('index', renderobj);
 });
 
+
+
 router.get("/capture/*", function(req,res){
-	var id = req.url.split("/")[-1]
-	sign(req,"/V1/charges/"+id+"/capture", function(result){
+	var id = req.url.split("/")[2]
+	sign(req,"/charges/"+id+"/capture", function(result){
 		try{
 
 		var object = JSON.parse(result)
 		console.log("result.ChargeId: "+ object.ChargeId)
 			req.id = object.ChargeId;
-			var terminal = "http://www.bohlmark.se/V1/Charges/"+object["ChargeId"]+"/Terminal?keyId=caspeco-1"
-			res.redirect(terminal)
-			
 			uncapturedOrders.remove(object.ChargeId)
 			console.log(uncapturedOrders.toString())
-			res.redirect("/")
+			//res.redirect("/")
+			var terminal = "https://localhost:49192/Charges/"+object["ChargeId"]+"/Terminal?keyId=caspeco-1"
+			res.redirect(terminal)
 		}catch(err){
 			res.send(result)
 		}
@@ -43,15 +44,17 @@ router.get("/capture/*", function(req,res){
 	)
 })
 
+
+
 router.post("/charge", function (req, res){
 	Capture = req.body.Capture;
 	console.log("Capture: " + Capture)
-	sign(req, '/V1/Charges', function(result){
+	sign(req, '/Charges', function(result){
 		var object = JSON.parse(result)
 		console.log("result.ChargeId: "+ object.ChargeId)
 		if(Capture){
 			req.id = object.ChargeId;
-			var terminal = "http://www.bohlmark.se/V1/Charges/"+object["ChargeId"]+"/Terminal?keyId=caspeco-1"
+			var terminal = "https://localhost:49192/Charges/"+object["ChargeId"]+"/Terminal?keyId=caspeco-1"
 			res.redirect(terminal)
 			
 		}else{
@@ -63,7 +66,7 @@ router.post("/charge", function (req, res){
 })
 
 router.get("/charges", function (req, res){
-	request.get("http://www.bohlmark.se/V1/charges?")
+	request.get("http:localhost:49192/charges?")
 })
 
 
