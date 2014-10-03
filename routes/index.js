@@ -49,6 +49,9 @@ router.get("/capture/*", function(req,res){
 router.post("/charge", function (req, res){
 	Capture = req.body.Capture;
 	console.log("Capture: " + Capture)
+	if(Capture){
+		delete req.body.Capture;
+	}
 	sign(req, '/Charges', function(result){
 		var object = JSON.parse(result)
 		console.log("result.ChargeId: "+ object.ChargeId)
